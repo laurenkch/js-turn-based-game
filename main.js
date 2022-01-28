@@ -103,7 +103,6 @@ class Game {
     constructor(player, enemy) {
         this.player = player
         // this.enemies = [new AttEnemy("M"), new DefEnemy("D"), new MedEnemy("F")]
-
         // this.loop = loop;
     }
 
@@ -157,16 +156,10 @@ const game = new Game();
 //////////////////////////////////////////////////////////////////////////////// PICK A PLAYER
 
 playerButton.forEach(button => button.addEventListener("click", function (event) {
-    let character = new MedPlayer;
-    console.log(character);
-    game.player = new event.target.value;
-    playerDisplay.innerHTML = game.player
-    console.log(game);
-    console.log(game.player);
-    console.log(game.player.health);
-    healthBar.innerHTML = game.player.health
+    let character = event.target.value;
+    playerDisplay.innerHTML = character
+    return character;
 }));
-
 
 
 //////////////////////////////////////////////////////////////////////////////// COMPARE
