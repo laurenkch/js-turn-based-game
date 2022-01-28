@@ -128,28 +128,34 @@ class Game {
     
 }
 
-const attDamage = function(){
-    let attVar = 0;
-    return attVar + (Math.floor(Math.random * 5) + 1);
+function attVarResult(){
+    return Math.floor((Math.random() * this.attVar) + 1);
 }
 
-const defDamage = function(){
-    let defVar = 0;
-    if(player === DefEnemy || player === DefPlayer){
-        return defVar + (Math.floor(Math.random * 7) + 1);
-    } else if (player === MedEnemy || player === MedPlayer){
-        return defVar + (Math.floor(Math.random * 6) + 1);
+function defVarResult(){
+    return Math.floor((Math.random * this.defVar) + 1);
+}
+
+function attDamage(){
+    return this.attack + attVarResult();
+}
+
+function defDamage(){
+    defVarResult();
+    if (defVarResult() >= 5){
+        console.log('BLOCKED!')
+        return this.defense + 100
     } else {
-        return defVar + (Math.floor(Math.random * 5) + 1);
-    };
+    return this.defense - (defResult());
+    }
 };
 
-const compare = function(){
-    if(defVar >= 5){
-        console.log('BLOCKED!');
-    } else if (combatAtt > combatDef){
+function compare(defHealth){
+    attDamage();
+    defDamage();
+    if (attDamage() > defDamage()){
         console.log('HIT');
-        defHealth = defHealth - (combatAtt - combatDef);
+     defHealth = defHealth - (attResult() - defResult());
     };
 };
 
