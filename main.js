@@ -1,3 +1,24 @@
+//////////////////////////////////////////////////////////////////////////////// CONSTANTS
+
+
+const healthBar = document.querySelector('.healthleft');
+const playerDisplay = document.querySelector('.player');
+const playerButton = document.querySelectorAll('.dropdown-item');
+const game = new Game();
+
+//////////////////////////////////////////////////////////////////////////////// START BUTTON
+
+
+startButton = document.getElementsByClassName('startButton')[0];
+
+startButton.addEventListener("click", function () {
+    game.start();
+    startButton.style.visibility = "hidden";
+});
+
+//////////////////////////////////////////////////////////////////////////////// CLASSES
+
+
 class Character{
     constructor(name, attack, defense, attVar, defVar){
         this.name = name;
@@ -76,6 +97,8 @@ class AttEnemy extends Character{
     }
 }
 
+//////////////////////////////////////////////////////////////////////////////// GAME
+
 class Game {
     constructor(player, enemy) {
         this.player = player
@@ -129,6 +152,21 @@ class Game {
     
 }
 
+//////////////////////////////////////////////////////////////////////////////// PICK A PLAYER
+
+playerButton.forEach(button => button.addEventListener("click", function (event) {
+    let character = event.target.value;
+    console.log(character);
+    game.player = new event.target.value;
+    playerDisplay.innerHTML = game.player
+    console.log(game);
+    console.log(game.player);
+    console.log(game.player.health);
+    healthBar.innerHTML = game.player.health
+}));
+
+//////////////////////////////////////////////////////////////////////////////// COMPARE
+
 function attVarResult(){
     return Math.floor((Math.random() * this.attVar) + 1);
 }
@@ -160,29 +198,6 @@ function compare(defHealth){
     };
 };
 
-const game = new Game();
-
-startButton = document.getElementsByClassName('startButton')[0];
-
-startButton.addEventListener("click", function() {
-    game.start();
-    startButton.style.visibility = "hidden";
-});
-
-const healthBar = document.querySelector('.healthleft');
-const playerDisplay = document.querySelector('.player');
-const playerButton = document.querySelectorAll('.dropdown-item');
-
-playerButton.forEach(button => button.addEventListener("click", function (event) {
-    let character = event.target.value;
-    console.log(character);
-    game.player = new event.target.value;
-    playerDisplay.innerHTML = game.player
-    console.log(game);
-    console.log(game.player);
-    console.log(game.player.health);
-    healthBar.innerHTML = game.player.health
-}));
 
 
 
