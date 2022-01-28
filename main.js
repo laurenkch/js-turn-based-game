@@ -4,6 +4,7 @@
 const healthBar = document.querySelector('.healthleft');
 const playerDisplay = document.querySelector('.player');
 const playerButton = document.querySelectorAll('.dropdown-item');
+let character = "";
 
 //////////////////////////////////////////////////////////////////////////////// START BUTTON
 
@@ -156,9 +157,8 @@ const game = new Game();
 //////////////////////////////////////////////////////////////////////////////// PICK A PLAYER
 
 playerButton.forEach(button => button.addEventListener("click", function (event) {
-    let character = event.target.value;
-    playerDisplay.innerHTML = character
-    return character;
+    character = event.target.value;
+    playerDisplay.innerHTML = character;
 }));
 
 
