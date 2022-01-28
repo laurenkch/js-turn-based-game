@@ -1,63 +1,77 @@
 class Character{
-    constructor(name, attack, defense){
+    constructor(name, attack, defense, attVar, defVar){
         this.name = name;
         this.health = 100;
         this.attack = attack;
         this.defense = defense;
+        this.attVar = attVar;
+        this.defVar = defVar;
     }
 }
 
 class MedPlayer extends Character{
-    constructor(name, attack, defense){
-        super(name, attack, defense);
+    constructor(name, attack, defense, attVar, defVar){
+        super(name, attack, defense, attVar, defVar);
         this.name = name;
         this.attack = 15;
         this.defense = 10; 
+        this.attVar = 5;
+        this.defVar = 6;
     }
 }
 
 class DefPlayer extends Character{
-    constructor(name, attack, defense){
-        super(name,  attack, defense);
+    constructor(name, attack, defense, attVar, defVar){
+        super(name,  attack, defense, attVar, defVar);
         this.name = name;
         this.attack = 12;
         this.defense = 13;
+        this.attVar = 5;
+        this.defVar = 7;
     }
 }
 
 class AttPlayer extends Character{
-    constructor(name, attack, defense){
-        super(name,  attack, defense);
+    constructor(name, attack, defense, attVar, defVar){
+        super(name,  attack, defense, attVar, defVar);
         this.name = name;
         this.attack = 17;
         this.defense = 7;
+        this.attVar = 5;
+        this.defVar = 5;
     }
 }
 
 class MedEnemy extends Character{
-    constructor(name, attack, defense){
-        super(name, attack, defense);
+    constructor(name, attack, defense, attVar, defVar){
+        super(name, attack, defense, attVar, defVar);
         this.name = name;
         this.attack = 15;
         this.defense = 10; 
+        this.attVar = 5;
+        this.defVar = 6;
     }
 }
 
 class DefEnemy extends Character{
-    constructor(name, attack, defense){
-        super(name,  attack, defense);
+    constructor(name, attack, defense, attVar, defVar ){
+        super(name,  attack, defense, attVar, defVar);
         this.name = name;
         this.attack = 12;
         this.defense = 13;
+        this.attVar = 5;
+        this.defVar = 7;
     }
 }
 
 class AttEnemy extends Character{
-    constructor(name, attack, defense){
-        super(name,  attack, defense);
+    constructor(name, attack, defense, attVar, defVar){
+        super(name,  attack, defense, attVar, defVar);
         this.name = name;
         this.attack = 17;
         this.defense = 7;
+        this.attVar = 5;
+        this.defVar = 5;
     }
 }
 
