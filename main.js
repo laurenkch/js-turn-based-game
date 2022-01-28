@@ -76,10 +76,11 @@ class AttEnemy extends Character{
 }
 
 class Game {
-    constructor() {
-        // this.players = [...]
+    constructor(player, enemy) {
+        this.player = player
         // this.enemies = [new AttEnemy("M"), new DefEnemy("D"), new MedEnemy("F")]
-        this.loop = loop;
+
+        // this.loop = loop;
     }
 
     choosePlayer() {
@@ -110,7 +111,6 @@ class Game {
 
     start() {
         this.loop = true;
-        // choosePlayer()
         // chooseEnemy()
         // start main loop
         /*
@@ -170,16 +170,16 @@ startButton.addEventListener("click", function() {
     startButton.style.visibility = "hidden";
 });
 
-
+const healthBar = document.querySelector('.healthleft');
+const playerDisplay = document.querySelector('.player');
 const playerButton = document.querySelectorAll('.dropdown-item');
 
 playerButton.forEach(button => button.addEventListener("click", function (event) {
     character = event.target.value;
-    game.choosePlayer(character);
+    game.player = character;
+    playerDisplay.innerHTML = game.player
+    healthBar.innerHTML = game.player.health
 }));
 
 
-Game.prototype.choosePlayer = function (character) {
-    player = new character
-};
 
