@@ -212,5 +212,6 @@ attackButton.addEventListener('click', () => {
       }, 10000);  
 })
 
+let hi = 0;
 
 
