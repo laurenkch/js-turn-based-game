@@ -75,6 +75,27 @@ class AttEnemy extends Character{
     }
 }
 
+class Game {
+    constructor() {
+        // this.
+    }
+
+    choosePlayer() {
+
+    }
+
+    chooseEnemy() {
+
+    }
+
+    start() {
+        // choosePlayer()
+        // chooseEnemy()
+        // start main loop
+    }
+    
+}
+
 const attDamage = function(){
     let attVar = 0;
     return attVar + (Math.floor(Math.random * 5) + 1);
