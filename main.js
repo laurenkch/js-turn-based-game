@@ -154,6 +154,7 @@ const compare = function(){
 };
 
 
+
 const game = new Game();
 
 startButton = document.getElementsByClassName('startButton')[0];
@@ -162,3 +163,17 @@ startButton.addEventListener("click", function() {
     game.start();
     startButton.style.visibility = "hidden";
 });
+
+
+const playerButton = document.querySelectorAll('.dropdown-item');
+
+playerButton.forEach(button => button.addEventListener("click", function (event) {
+    character = event.target.value;
+    game.choosePlayer(character);
+}));
+
+
+Game.prototype.choosePlayer = function (character) {
+    player = new character
+};
+
