@@ -10,9 +10,10 @@ class Character{
 }
 
 class MedPlayer extends Character{
-    constructor(name, attack, defense, attVar, defVar){
-        super(name, attack, defense, attVar, defVar);
+    constructor(name, health, attack, defense, attVar, defVar){
+        super(name, health, attack, defense, attVar, defVar);
         this.name = name;
+        this.health = 100;
         this.attack = 15;
         this.defense = 10; 
         this.attVar = 5;
@@ -159,8 +160,6 @@ function compare(defHealth){
     };
 };
 
-
-
 const game = new Game();
 
 startButton = document.getElementsByClassName('startButton')[0];
@@ -175,9 +174,13 @@ const playerDisplay = document.querySelector('.player');
 const playerButton = document.querySelectorAll('.dropdown-item');
 
 playerButton.forEach(button => button.addEventListener("click", function (event) {
-    character = event.target.value;
-    game.player = character;
+    let character = event.target.value;
+    console.log(character);
+    game.player = new event.target.value;
     playerDisplay.innerHTML = game.player
+    console.log(game);
+    console.log(game.player);
+    console.log(game.player.health);
     healthBar.innerHTML = game.player.health
 }));
 
