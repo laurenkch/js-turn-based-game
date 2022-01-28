@@ -134,18 +134,19 @@ Game.prototype.confirmPlayer = function () {
 
 /////////////////////////////////////////////////////////////////////////// PICK AN ENEMY
 
-Game.prototype.chooseEnemy = function () {
-    let enemyName = enemies[Math.floor((Math.random() * 3) + 1)];
-    if (enemyName === 'AttEnemy') {
+Game.prototype.chooseEnemy = function() {
+    let num = Math.floor(Math.random() * 3);
+    console.log(enemies[num]);
+    if (enemies[num] === 'AttEnemy') {
         this.enemy = new AttEnemy;
-    } else if (enemyName === 'DefEnemy') {
+    } else if (enemies[num] === 'DefEnemy') {
         this.enemy = new DefEnemy;
     } else {
         this.enemy = new MedEnemy;
     }
     console.log(this.enemy);
-
 }
+
 //////////////////////////////////////////////////////////////////////////////// PICK A PLAYER
 
 playerButton.forEach(button => button.addEventListener("click", function (event) {
@@ -186,7 +187,6 @@ function compare(){
         defender.health = defender.health - (attResult() - defResult());
     }
 }
-
 
 function victory() {
     if (player.health === 0) {
