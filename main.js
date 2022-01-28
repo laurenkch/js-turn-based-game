@@ -175,12 +175,12 @@ function attDamage() {
 }
 
 function defDamage(defender) {
-    defVarResult();
-    if (defVarResult() >= 5) {
+   let num = defVarResult();
+    if (num >= 5) {
         console.log('BLOCKED!')
         return defender.defense + 100
     } else {
-        return defender.defense - (defVarResult());
+        return defender.defense - (num);
     }
 }
 
