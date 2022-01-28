@@ -117,7 +117,7 @@ class Game {
         while (loop) {
             checkForWinner();
         };
-        
+
         eventListener {
             if (attack === true) {
                 player.Attack(enemy, valueTaken)
@@ -152,3 +152,13 @@ const compare = function(){
         defHealth = defHealth - (combatAtt - combatDef);
     };
 };
+
+
+const game = new Game();
+
+startButton = document.getElementsByClassName('startButton')[0];
+
+startButton.addEventListener("click", function() {
+    game.start();
+    startButton.style.visibility = "hidden";
+});
