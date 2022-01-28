@@ -26,6 +26,7 @@ class Character{
         this.defense = defense;
         this.attVar = attVar;
         this.defVar = defVar;
+
     }
 }
 
@@ -35,15 +36,15 @@ class MedPlayer extends Character{
         this.name = name;
         this.health = 100;
         this.attack = 15;
-        this.defense = 10; 
+        this.defense = 10;
         this.attVar = 5;
         this.defVar = 6;
     }
 }
 
-class DefPlayer extends Character{
-    constructor(name, attack, defense, attVar, defVar){
-        super(name,  attack, defense, attVar, defVar);
+class DefPlayer extends Character {
+    constructor(name, attack, defense, attVar, defVar) {
+        super(name, attack, defense, attVar, defVar);
         this.name = name;
         this.attack = 12;
         this.defense = 13;
@@ -52,9 +53,9 @@ class DefPlayer extends Character{
     }
 }
 
-class AttPlayer extends Character{
-    constructor(name, attack, defense, attVar, defVar){
-        super(name,  attack, defense, attVar, defVar);
+class AttPlayer extends Character {
+    constructor(name, attack, defense, attVar, defVar) {
+        super(name, attack, defense, attVar, defVar);
         this.name = name;
         this.attack = 17;
         this.defense = 7;
@@ -63,20 +64,20 @@ class AttPlayer extends Character{
     }
 }
 
-class MedEnemy extends Character{
-    constructor(name, attack, defense, attVar, defVar){
+class MedEnemy extends Character {
+    constructor(name, attack, defense, attVar, defVar) {
         super(name, attack, defense, attVar, defVar);
         this.name = name;
         this.attack = 15;
-        this.defense = 10; 
+        this.defense = 10;
         this.attVar = 5;
         this.defVar = 6;
     }
 }
 
-class DefEnemy extends Character{
-    constructor(name, attack, defense, attVar, defVar ){
-        super(name,  attack, defense, attVar, defVar);
+class DefEnemy extends Character {
+    constructor(name, attack, defense, attVar, defVar) {
+        super(name, attack, defense, attVar, defVar);
         this.name = name;
         this.attack = 12;
         this.defense = 13;
@@ -85,9 +86,9 @@ class DefEnemy extends Character{
     }
 }
 
-class AttEnemy extends Character{
-    constructor(name, attack, defense, attVar, defVar){
-        super(name,  attack, defense, attVar, defVar);
+class AttEnemy extends Character {
+    constructor(name, attack, defense, attVar, defVar) {
+        super(name, attack, defense, attVar, defVar);
         this.name = name;
         this.attack = 17;
         this.defense = 7;
@@ -148,7 +149,7 @@ class Game {
         }
         */
     }
-    
+
 }
 
 const game = new Game();
@@ -174,33 +175,59 @@ function attVarResult(){
     return Math.floor((Math.random() * this.attVar) + 1);
 }
 
-function defVarResult(){
+function defVarResult() {
     return Math.floor((Math.random * this.defVar) + 1);
 }
 
-function attDamage(){
+function attDamage() {
     return this.attack + attVarResult();
 }
 
-function defDamage(){
+function defDamage() {
     defVarResult();
-    if (defVarResult() >= 5){
+    if (defVarResult() >= 5) {
         console.log('BLOCKED!')
         return this.defense + 100
     } else {
-    return this.defense - (defResult());
+        return this.defense - (defVarResult());
     }
-};
+}
 
 function compare(defHealth){
     attDamage();
     defDamage();
-    if (attDamage() > defDamage()){
+    if (attDamage() > defDamage()) {
         console.log('HIT');
-     defHealth = defHealth - (attResult() - defResult());
-    };
+        defHealth = defHealth - (attResult() - defResult());
+    }
+}
+
+const attackButton = document.querySelector('.attackButton')
+attackButton.addEventListener('click', () => {
+    compare();
+})
+
+
+
+const game = new Game();
+
+startButton = document.getElementsByClassName('startButton')[0];
+
+startButton.addEventListener("click", function () {
+    game.start();
+    startButton.style.visibility = "hidden";
+});
+
+
+const playerButton = document.querySelectorAll('.dropdown-item');
+
+playerButton.forEach(button => button.addEventListener("click", function (event) {
+    character = event.target.value;
+    game.choosePlayer(character);
+}));
+
+
+Game.prototype.choosePlayer = function (character) {
+    player = new character
 };
-
-
-
 
