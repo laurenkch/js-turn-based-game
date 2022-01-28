@@ -15,7 +15,6 @@ attackButton.style.visibility = "hidden";
 const enemies = ['AttEnemy', 'DefEnemy', 'MedEnemy'];
 let game = {};
 let character = "";
-let game = {};
 //////////////////////////////////////////////////////////////////////////////// CLASSES
 
 
