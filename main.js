@@ -77,7 +77,9 @@ class AttEnemy extends Character{
 
 class Game {
     constructor() {
-        // this.
+        // this.players = [...]
+        // this.enemies = [new AttEnemy("M"), new DefEnemy("D"), new MedEnemy("F")]
+        this.loop = loop;
     }
 
     choosePlayer() {
@@ -88,10 +90,40 @@ class Game {
 
     }
 
+    win() {
+        this.loop = false;
+        console.log("Conglaturation. You're winner!")
+    }
+
+    lose() {
+        this.loop = false;
+        console.log("You lost!")
+    }
+
+    checkForWinner() {
+        if (player.health === 0) {
+            game.lose()
+        } else if (enemy.health === 0) {
+            game.win()
+        }
+    }
+
     start() {
+        this.loop = true;
         // choosePlayer()
         // chooseEnemy()
         // start main loop
+        /*
+        while (loop) {
+            checkForWinner();
+        };
+        
+        eventListener {
+            if (attack === true) {
+                player.Attack(enemy, valueTaken)
+            }
+        }
+        */
     }
     
 }
