@@ -7,6 +7,9 @@ const attackButton = document.querySelector('.attackButton');
 const enemies = ['AttEnemy', 'DefEnemy', 'MedEnemy'];
 const startButton = document.querySelector('.startButton');
 const playerDropdown = document.querySelector('.dropdown-toggle');
+let game = {};
+
+startButton.style.visibility = "hidden";
 
 let character = "";
 let attacker = {};
@@ -103,12 +106,15 @@ class Game {
     }
 }
 
-function start() {
-    const game = new Game();
-    game.chooseEnemy();
-    game.confirmPlayer();
-  
-    };
+//////////////////////////////////////////////////////////////////////////////// PICK A PLAYER
+
+playerButton.forEach(button => button.addEventListener("click", function (event) {
+    character = event.target.value;
+    playerDisplay.innerHTML = character;
+    startButton.style.visibility = "unset";
+
+}));
+
 
 //////////////////////////////////////////////////////////////////////////////// START BUTTON
 
@@ -117,6 +123,13 @@ startButton.addEventListener("click", function () {
     startButton.style.visibility = "hidden";
     playerDropdown.style.visibility = "hidden";
 });
+
+function start() {
+    game = new Game();
+    game.chooseEnemy();
+    game.confirmPlayer();
+};
+
 
 /////////////////////////////////////////////////////////////////////////// CONFIRM PLAYER
 
@@ -146,14 +159,6 @@ Game.prototype.chooseEnemy = function() {
     }
     console.log(this.enemy);
 }
-
-//////////////////////////////////////////////////////////////////////////////// PICK A PLAYER
-
-playerButton.forEach(button => button.addEventListener("click", function (event) {
-    character = event.target.value;
-    playerDisplay.innerHTML = character;
-}));
-
 
 //////////////////////////////////////////////////////////////////////////////// COMPARE
 
