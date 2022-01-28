@@ -3,19 +3,14 @@
 const healthBar = document.querySelector('.healthleft');
 const playerDisplay = document.querySelector('.player');
 const playerButton = document.querySelectorAll('.dropdown-item');
-let character = "";
 const attackButton = document.querySelector('.attackButton');
-const enemies = [AttEnemy, DefEnemy, MedEnemy];
+const enemies = ['AttEnemy', 'DefEnemy', 'MedEnemy'];
+const startButton = document.querySelector('.startButton');
+const playerDropdown = document.querySelector('.dropdown-toggle');
 
-//////////////////////////////////////////////////////////////////////////////// START BUTTON
-
-
-startButton = document.getElementsByClassName('startButton')[0];
-
-startButton.addEventListener("click", function () {
-    game.start();
-    startButton.style.visibility = "hidden";
-});
+let character = "";
+let attacker = {};
+let defender = {};
 
 //////////////////////////////////////////////////////////////////////////////// CLASSES
 
@@ -104,41 +99,51 @@ class AttEnemy extends Character {
 class Game {
     constructor(player, enemy) {
         this.player = player;
-        // this.enemies = [new AttEnemy("M"), new DefEnemy("D"), new MedEnemy("F")]
-        // this.loop = loop;
+        this.enemy = enemy;
     }
-
-    chooseEnemy() {
-        []
-    }
-
-    start() {
-        const game = new Game();
-        this.chooseEnemy();
-        this.loop = true;
-
-        // start main loop
-        /*
-        while (loop) {
-            checkForWinner();
-        };
-        */
-    }
-
 }
+
+function start() {
+    const game = new Game();
+    game.chooseEnemy();
+    game.confirmPlayer();
+  
+    };
+
+//////////////////////////////////////////////////////////////////////////////// START BUTTON
+
+startButton.addEventListener("click", function () {
+    start();
+    startButton.style.visibility = "hidden";
+    playerDropdown.style.visibility = "hidden";
+});
+
+/////////////////////////////////////////////////////////////////////////// CONFIRM PLAYER
+
+Game.prototype.confirmPlayer = function () {
+    if (character === 'AttPlayer') {
+        this.player = new AttPlayer;
+    } else if (character === 'DefPlayer') {
+        this.player = new DefPlayer;
+    } else {
+        this.player = new MedPlayer;
+    }
+    console.log(this.player);
+};
+
 
 /////////////////////////////////////////////////////////////////////////// PICK AN ENEMY
 
 Game.prototype.chooseEnemy = function () {
     let enemyName = enemies[Math.floor((Math.random() * 3) + 1)];
     if (enemyName === 'AttEnemy') {
-        game.enemy = new AttEnemy;
+        this.enemy = new AttEnemy;
     } else if (enemyName === 'DefEnemy') {
-        game.enemy = new DefEnemy;
+        this.enemy = new DefEnemy;
     } else {
-        game.enemy = new MedEnemy;
+        this.enemy = new MedEnemy;
     }
-    console.log(game.enemy);
+    console.log(this.enemy);
 
 }
 //////////////////////////////////////////////////////////////////////////////// PICK A PLAYER
@@ -152,15 +157,15 @@ playerButton.forEach(button => button.addEventListener("click", function (event)
 //////////////////////////////////////////////////////////////////////////////// COMPARE
 
 function attVarResult(){
-    return Math.floor((Math.random() * attacker.attVar) + 1);
+    console.log(Math.floor((Math.random() * this.attVar) + 1));
 }
 
 function defVarResult() {
-    return Math.floor((Math.random * defender.defVar) + 1);
+    console.log(Math.floor((Math.random * this.defVar) + 1));
 }
 
 function attDamage() {
-    return attacker.attack + attVarResult();
+    console.log(this.attack + attVarResult());
 }
 
 function defDamage(defender) {
@@ -195,8 +200,8 @@ function victory() {
 
 
 attackButton.addEventListener('click', () => {
-    let attacker = this.player;
-    let defender = this.enemy;
+    attacker = this.player;
+    defender = this.enemy;
     compare();
     victory();
     attacker = this.enemy;
@@ -208,32 +213,4 @@ attackButton.addEventListener('click', () => {
 })
 
 
-
-const game = new Game();
-
-const startButton = document.querySelector('.startButton');
-// const healthBar = document.querySelector('.healthleft');
-// const playerDisplay = document.querySelector('.player');
-// const playerButton = document.querySelectorAll('.dropdown-item');
-const playerDropdown = document.querySelector('.dropdown-toggle');
-startButton = document.getElementsByClassName('startButton')[0];
-
-startButton.addEventListener("click", function () {
-    game.start();
-    startButton.style.visibility = "hidden";
-    playerDropdown.style.visibility = "hidden";
-});
-
-
-const playerButton = document.querySelectorAll('.dropdown-item');
-
-playerButton.forEach(button => button.addEventListener("click", function (event) {
-    character = event.target.value;
-    game.choosePlayer(character);
-}));
-
-
-Game.prototype.choosePlayer = function (character) {
-    player = new character
-};
 
