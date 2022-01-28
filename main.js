@@ -1,11 +1,11 @@
 //////////////////////////////////////////////////////////////////////////////// CONSTANTS
 
-
 const healthBar = document.querySelector('.healthleft');
 const playerDisplay = document.querySelector('.player');
 const playerButton = document.querySelectorAll('.dropdown-item');
 let character = "";
 const attackButton = document.querySelector('.attackButton');
+const enemies = [AttEnemy, DefEnemy, MedEnemy];
 
 //////////////////////////////////////////////////////////////////////////////// START BUTTON
 
@@ -113,8 +113,10 @@ class Game {
     }
 
     start() {
+        const game = new Game();
+        this.chooseEnemy();
         this.loop = true;
-        // chooseEnemy()
+
         // start main loop
         /*
         while (loop) {
@@ -125,8 +127,20 @@ class Game {
 
 }
 
-const game = new Game();
+/////////////////////////////////////////////////////////////////////////// PICK AN ENEMY
 
+Game.prototype.chooseEnemy = function () {
+    let enemyName = enemies[Math.floor((Math.random() * 3) + 1)];
+    if (enemyName === 'AttEnemy') {
+        game.enemy = new AttEnemy;
+    } else if (enemyName === 'DefEnemy') {
+        game.enemy = new DefEnemy;
+    } else {
+        game.enemy = new MedEnemy;
+    }
+    console.log(game.enemy);
+
+}
 //////////////////////////////////////////////////////////////////////////////// PICK A PLAYER
 
 playerButton.forEach(button => button.addEventListener("click", function (event) {
@@ -198,10 +212,11 @@ attackButton.addEventListener('click', () => {
 const game = new Game();
 
 const startButton = document.querySelector('.startButton');
-const healthBar = document.querySelector('.healthleft');
-const playerDisplay = document.querySelector('.player');
-const playerButton = document.querySelectorAll('.dropdown-item');
+// const healthBar = document.querySelector('.healthleft');
+// const playerDisplay = document.querySelector('.player');
+// const playerButton = document.querySelectorAll('.dropdown-item');
 const playerDropdown = document.querySelector('.dropdown-toggle');
+startButton = document.getElementsByClassName('startButton')[0];
 
 startButton.addEventListener("click", function () {
     game.start();
