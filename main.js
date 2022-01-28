@@ -102,17 +102,13 @@ class AttEnemy extends Character {
 
 class Game {
     constructor(player, enemy) {
-        this.player = player
+        this.player = player;
         // this.enemies = [new AttEnemy("M"), new DefEnemy("D"), new MedEnemy("F")]
         // this.loop = loop;
     }
 
-    choosePlayer() {
-
-    }
-
     chooseEnemy() {
-
+        []
     }
 
     win() {
@@ -141,12 +137,6 @@ class Game {
         while (loop) {
             checkForWinner();
         };
-
-        eventListener {
-            if (attack === true) {
-                player.Attack(enemy, valueTaken)
-            }
-        }
         */
     }
 
@@ -204,11 +194,16 @@ attackButton.addEventListener('click', () => {
 
 const game = new Game();
 
-startButton = document.getElementsByClassName('startButton')[0];
+const startButton = document.querySelector('.startButton');
+const healthBar = document.querySelector('.healthleft');
+const playerDisplay = document.querySelector('.player');
+const playerButton = document.querySelectorAll('.dropdown-item');
+const playerDropdown = document.querySelector('.dropdown-toggle');
 
 startButton.addEventListener("click", function () {
     game.start();
     startButton.style.visibility = "hidden";
+    playerDropdown.style.visibility = "hidden";
 });
 
 
