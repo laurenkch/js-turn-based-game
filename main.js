@@ -6,13 +6,14 @@ const playerNameDisplay = document.querySelector('.player h2');
 const enemyNameDisplay = document.querySelector('.enemy h2')
 const playerButton = document.querySelectorAll('.dropdown-item');
 const attackButton = document.querySelector('.attackButton');
-const enemies = ['AttEnemy', 'DefEnemy', 'MedEnemy'];
 const startButton = document.querySelector('.startButton');
 const playerDropdown = document.querySelector('.dropdown-toggle');
-let game = {};
 
 startButton.style.visibility = "hidden";
+attackButton.style.visibility = "hidden";
 
+const enemies = ['AttEnemy', 'DefEnemy', 'MedEnemy'];
+let game = {};
 let character = "";
 let attacker = {};
 let defender = {};
@@ -69,7 +70,7 @@ class AttPlayer extends Character {
 class MedEnemy extends Character {
     constructor(name, attack, defense, attVar, defVar) {
         super(name, attack, defense, attVar, defVar);
-        this.name = 'Connor';
+        this.name = 'Zookeeper Connor';
         this.attack = 15;
         this.defense = 10;
         this.attVar = 5;
@@ -80,7 +81,7 @@ class MedEnemy extends Character {
 class DefEnemy extends Character {
     constructor(name, attack, defense, attVar, defVar) {
         super(name, attack, defense, attVar, defVar);
-        this.name = 'Sean';
+        this.name = 'Zookeeper Sean';
         this.attack = 12;
         this.defense = 13;
         this.attVar = 5;
@@ -91,7 +92,7 @@ class DefEnemy extends Character {
 class AttEnemy extends Character {
     constructor(name, attack, defense, attVar, defVar) {
         super(name, attack, defense, attVar, defVar);
-        this.name = 'Tommy';
+        this.name = 'Zookeeper Tommy';
         this.attack = 17;
         this.defense = 7;
         this.attVar = 5;
@@ -108,13 +109,12 @@ class Game {
     }
 }
 
-//////////////////////////////////////////////////////////////////////////////// PICK A PLAYER
+//////////////////////////////////////////////////////////////////////////////// PICK A PLAYER DROPDOWN
 
 playerButton.forEach(button => button.addEventListener("click", function (event) {
     character = event.target.value;
     playerNameDisplay.innerHTML = character;
     startButton.style.visibility = "unset";
-
 }));
 
 
@@ -124,12 +124,14 @@ startButton.addEventListener("click", function () {
     start();
     startButton.style.visibility = "hidden";
     playerDropdown.style.visibility = "hidden";
+
 });
 
 function start() {
     game = new Game();
     game.chooseEnemy();
     game.confirmPlayer();
+    attackButton.style.visibility = "unset";
 };
 
 
