@@ -21,7 +21,7 @@ ul {
 
 .btn-danger {
     position: absolute;
-    bottom: 0;
+    bottom: 10vh;
     left: 47vw;
 }
 

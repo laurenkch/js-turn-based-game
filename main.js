@@ -1,7 +1,9 @@
 //////////////////////////////////////////////////////////////////////////////// CONSTANTS
 
-const healthBar = document.querySelector('.healthleft');
-const playerDisplay = document.querySelector('.player');
+const playerHealthBar = document.querySelector('.player-healthleft');
+const enemyHealthBar = document.querySelector('.enemy-healthleft');
+const playerNameDisplay = document.querySelector('.player h2');
+const enemyNameDisplay = document.querySelector('.enemy h2')
 const playerButton = document.querySelectorAll('.dropdown-item');
 const attackButton = document.querySelector('.attackButton');
 const enemies = ['AttEnemy', 'DefEnemy', 'MedEnemy'];
@@ -33,7 +35,7 @@ class Character{
 class MedPlayer extends Character{
     constructor(name, health, attack, defense, attVar, defVar){
         super(name, health, attack, defense, attVar, defVar);
-        this.name = name;
+        this.name = 'Monkey with a stick';
         this.health = 100;
         this.attack = 15;
         this.defense = 10;
@@ -45,7 +47,7 @@ class MedPlayer extends Character{
 class DefPlayer extends Character {
     constructor(name, attack, defense, attVar, defVar) {
         super(name, attack, defense, attVar, defVar);
-        this.name = name;
+        this.name = 'Turtle';
         this.attack = 12;
         this.defense = 13;
         this.attVar = 5;
@@ -56,7 +58,7 @@ class DefPlayer extends Character {
 class AttPlayer extends Character {
     constructor(name, attack, defense, attVar, defVar) {
         super(name, attack, defense, attVar, defVar);
-        this.name = name;
+        this.name = 'Cougar';
         this.attack = 17;
         this.defense = 7;
         this.attVar = 5;
@@ -67,7 +69,7 @@ class AttPlayer extends Character {
 class MedEnemy extends Character {
     constructor(name, attack, defense, attVar, defVar) {
         super(name, attack, defense, attVar, defVar);
-        this.name = name;
+        this.name = 'Connor';
         this.attack = 15;
         this.defense = 10;
         this.attVar = 5;
@@ -78,7 +80,7 @@ class MedEnemy extends Character {
 class DefEnemy extends Character {
     constructor(name, attack, defense, attVar, defVar) {
         super(name, attack, defense, attVar, defVar);
-        this.name = name;
+        this.name = 'Sean';
         this.attack = 12;
         this.defense = 13;
         this.attVar = 5;
@@ -89,7 +91,7 @@ class DefEnemy extends Character {
 class AttEnemy extends Character {
     constructor(name, attack, defense, attVar, defVar) {
         super(name, attack, defense, attVar, defVar);
-        this.name = name;
+        this.name = 'Tommy';
         this.attack = 17;
         this.defense = 7;
         this.attVar = 5;
@@ -110,7 +112,7 @@ class Game {
 
 playerButton.forEach(button => button.addEventListener("click", function (event) {
     character = event.target.value;
-    playerDisplay.innerHTML = character;
+    playerNameDisplay.innerHTML = character;
     startButton.style.visibility = "unset";
 
 }));
@@ -141,6 +143,7 @@ Game.prototype.confirmPlayer = function () {
     } else {
         this.player = new MedPlayer;
     }
+    playerNameDisplay.innerHTML = this.player.name;
     console.log(this.player);
 };
 
@@ -157,6 +160,7 @@ Game.prototype.chooseEnemy = function() {
     } else {
         this.enemy = new MedEnemy;
     }
+    enemyNameDisplay.innerHTML = this.enemy.name;
     console.log(this.enemy);
 }
 
