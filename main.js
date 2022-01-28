@@ -5,6 +5,7 @@ const healthBar = document.querySelector('.healthleft');
 const playerDisplay = document.querySelector('.player');
 const playerButton = document.querySelectorAll('.dropdown-item');
 let character = "";
+const attackButton = document.querySelector('.attackButton');
 
 //////////////////////////////////////////////////////////////////////////////// START BUTTON
 
@@ -111,24 +112,6 @@ class Game {
         []
     }
 
-    win() {
-        this.loop = false;
-        console.log("Conglaturation. You're winner!")
-    }
-
-    lose() {
-        this.loop = false;
-        console.log("You lost!")
-    }
-
-    checkForWinner() {
-        if (player.health === 0) {
-            game.lose()
-        } else if (enemy.health === 0) {
-            game.win()
-        }
-    }
-
     start() {
         this.loop = true;
         // chooseEnemy()
@@ -155,39 +138,59 @@ playerButton.forEach(button => button.addEventListener("click", function (event)
 //////////////////////////////////////////////////////////////////////////////// COMPARE
 
 function attVarResult(){
-    return Math.floor((Math.random() * this.attVar) + 1);
+    return Math.floor((Math.random() * attacker.attVar) + 1);
 }
 
 function defVarResult() {
-    return Math.floor((Math.random * this.defVar) + 1);
+    return Math.floor((Math.random * defender.defVar) + 1);
 }
 
 function attDamage() {
-    return this.attack + attVarResult();
+    return attacker.attack + attVarResult();
 }
 
-function defDamage() {
+function defDamage(defender) {
     defVarResult();
     if (defVarResult() >= 5) {
         console.log('BLOCKED!')
-        return this.defense + 100
+        return defender.defense + 100
     } else {
-        return this.defense - (defVarResult());
+        return defender.defense - (defVarResult());
     }
 }
 
-function compare(defHealth){
+function compare(){
     attDamage();
     defDamage();
     if (attDamage() > defDamage()) {
         console.log('HIT');
-        defHealth = defHealth - (attResult() - defResult());
+        defender.health = defender.health - (attResult() - defResult());
     }
 }
 
-const attackButton = document.querySelector('.attackButton')
+
+function victory() {
+    if (player.health === 0) {
+        console.log("You lost!")
+    } else if (enemy.health === 0) {
+        console.log("Conglaturation. You're winner!")
+    }
+}
+
+//////////////////////////////////////////////////////////////////////////////// ATTACK BUTTON
+
+
 attackButton.addEventListener('click', () => {
+    let attacker = this.player;
+    let defender = this.enemy;
     compare();
+    victory();
+    attacker = this.enemy;
+    defender = this.player;
+    setTimeout(function() {
+        compare();
+        victory();
+      }, 10000);  
 })
 
 
