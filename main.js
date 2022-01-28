@@ -4,7 +4,6 @@
 const healthBar = document.querySelector('.healthleft');
 const playerDisplay = document.querySelector('.player');
 const playerButton = document.querySelectorAll('.dropdown-item');
-const game = new Game();
 
 //////////////////////////////////////////////////////////////////////////////// START BUTTON
 
@@ -152,10 +151,12 @@ class Game {
     
 }
 
+const game = new Game();
+
 //////////////////////////////////////////////////////////////////////////////// PICK A PLAYER
 
 playerButton.forEach(button => button.addEventListener("click", function (event) {
-    let character = event.target.value;
+    let character = new MedPlayer;
     console.log(character);
     game.player = new event.target.value;
     playerDisplay.innerHTML = game.player
@@ -164,6 +165,8 @@ playerButton.forEach(button => button.addEventListener("click", function (event)
     console.log(game.player.health);
     healthBar.innerHTML = game.player.health
 }));
+
+
 
 //////////////////////////////////////////////////////////////////////////////// COMPARE
 
