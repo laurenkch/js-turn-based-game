@@ -8,6 +8,7 @@ const playerButton = document.querySelectorAll('.dropdown-item');
 const attackButton = document.querySelector('.attackButton');
 const startButton = document.querySelector('.startButton');
 const playerDropdown = document.querySelector('.dropdown-toggle');
+const resDisplay = document.querySelector('.resDisplay');
 
 startButton.style.visibility = "hidden";
 attackButton.style.visibility = "hidden";
@@ -18,8 +19,8 @@ let character = "";
 //////////////////////////////////////////////////////////////////////////////// CLASSES
 
 
-class Character{
-    constructor(name, health, attack, defense, attVar, defVar){
+class Character {
+    constructor(name, health, attack, defense, attVar, defVar) {
         this.name = name;
         this.health = health;
         this.attack = attack;
@@ -30,8 +31,8 @@ class Character{
     }
 }
 
-class MedPlayer extends Character{
-    constructor(name, health, attack, defense, attVar, defVar){
+class MedPlayer extends Character {
+    constructor(name, health, attack, defense, attVar, defVar) {
         super(name, health, attack, defense, attVar, defVar);
         this.name = 'Monkey with a stick';
         this.health = 100;
@@ -54,7 +55,7 @@ class DefPlayer extends Character {
     }
 }
 
-class AttPlayer extends Character {       
+class AttPlayer extends Character {
     constructor(name, health, attack, defense, attVar, defVar) {
         super(name, health, attack, defense, attVar, defVar);
         this.name = 'Cougar';
@@ -68,7 +69,7 @@ class AttPlayer extends Character {
 
 class MedEnemy extends Character {
     constructor(name, health, attack, defense, attVar, defVar) {
-        super(name, health,attack, defense, attVar, defVar);
+        super(name, health, attack, defense, attVar, defVar);
         this.name = 'Zookeeper Connor';
         this.health = 100;
         this.attack = 15;
@@ -78,10 +79,10 @@ class MedEnemy extends Character {
     }
 }
 
-class DefEnemy extends Character {     
+class DefEnemy extends Character {
     constructor(name, health, attack, defense, attVar, defVar) {
         super(name, health, attack, defense, attVar, defVar);
-        this.name = 'Zookeeper Sean';
+        this.name = 'Zookeeper Shaun';
         this.health = 100;
         this.attack = 12;
         this.defense = 13;
@@ -91,7 +92,7 @@ class DefEnemy extends Character {
 }
 
 class AttEnemy extends Character {
-    constructor(name,health, attack, defense, attVar, defVar) {
+    constructor(name, health, attack, defense, attVar, defVar) {
         super(name, health, attack, defense, attVar, defVar);
         this.name = 'Zookeeper Tommy';
         this.health = 100;
@@ -123,7 +124,8 @@ startButton.addEventListener("click", function () {
     start();
     startButton.style.visibility = "hidden";
     playerDropdown.style.visibility = "hidden";
-
+    resDisplay.innerHTML = 'FIGHT!!!!!';
+    animation();
 });
 
 function start() {
@@ -151,7 +153,7 @@ Game.prototype.confirmPlayer = function () {
 
 /////////////////////////////////////////////////////////////////////////// PICK AN ENEMY
 
-Game.prototype.chooseEnemy = function() {
+Game.prototype.chooseEnemy = function () {
     let num = Math.floor(Math.random() * 3);
     console.log(enemies[num]);
     if (enemies[num] === 'AttEnemy') {
@@ -169,40 +171,44 @@ Game.prototype.chooseEnemy = function() {
 
 /////////PLAYER TURN
 
-Game.prototype.attVarResult = function(){
+Game.prototype.attVarResult = function () {
     // console.log(Math.floor((Math.random() * this.player.attVar) + 1));
     return Math.floor((Math.random() * this.player.attVar) + 1);
 }
 
-Game.prototype.defVarResult = function() {
+Game.prototype.defVarResult = function () {
     // console.log(Math.floor(Math.random * this.enemy.defVar) + 1);
     return Math.floor((Math.random() * this.enemy.defVar) + 1);
 }
 
-Game.prototype.attDamage = function() {
+Game.prototype.attDamage = function () {
     // game.attVarResult();
     // console.log(this.player.attack + game.attVarResult());
     return this.player.attack + game.attVarResult();
 }
 
-Game.prototype.defDamage = function() {
+Game.prototype.defDamage = function () {
     let defResultEn = game.defVarResult();
     console.log(defResultEn);
     if (defResultEn >= 5) {
-        console.log('BLOCKED!')
+        console.log('BLOCKED!');
+        resDisplay.innerHTML = 'BLOCKED!!!!!';
+        animation();
         return this.enemy.defense + 100
     } else {
         return this.enemy.defense - (defResultEn);
     }
 }
 
-Game.prototype.comparePlayerTurn = function(){
+Game.prototype.comparePlayerTurn = function () {
     let attackDamP = game.attDamage();
     console.log(attackDamP);
     let defDamEn = game.defDamage();
     console.log(defDamEn);
     if (attackDamP > defDamEn) {
-        console.log('HIT');
+        console.log('DAMAGE');
+        resDisplay.innerHTML = 'DAMAGE!!!!!';
+        animation();
         console.log(this.enemy.health)
         console.log(attackDamP - defDamEn)
         console.log(this.enemy.health - (attackDamP - defDamEn));
@@ -213,38 +219,42 @@ Game.prototype.comparePlayerTurn = function(){
 
 /////////ENEMY TURN
 
-Game.prototype.attVarResEnemy = function(){
+Game.prototype.attVarResEnemy = function () {
     // console.log(Math.floor((Math.random() * this.enemy.attVar) + 1));
     return Math.floor((Math.random() * this.enemy.attVar) + 1);
 }
 
-Game.prototype.defVarResEnemy = function() {
+Game.prototype.defVarResEnemy = function () {
     // console.log(Math.floor((Math.random * this.player.defVar) + 1));
     return Math.floor((Math.random() * this.player.defVar) + 1);
 }
 
-Game.prototype.attDamEnemy = function() {
+Game.prototype.attDamEnemy = function () {
     // console.log(this.enemy.attack + game.attVarResult());
     return this.enemy.attack + game.attVarResult();
 }
 
-Game.prototype.defDamEnemy = function() {
+Game.prototype.defDamEnemy = function () {
     let defResultP = game.defVarResEnemy();
     // console.log(defResultP);
     if (defResultP >= 5) {
         console.log('BLOCKED!')
-        return this.player.defense + 100
+        resDisplay.innerHTML = 'BLOCKED!!!!!';
+        animation();
+        return this.player.defense + 100;
     } else {
         return this.player.defense - (defResultP);
     }
 }
 
-Game.prototype.compareEnemyTurn = function(){
+Game.prototype.compareEnemyTurn = function () {
     let attackDamEn = game.attDamEnemy();
     // console.log(attackDamEn);
     let defDamP = game.defDamEnemy();
     if (attackDamEn > defDamP) {
-        console.log('HIT');
+        console.log('DAMAGE');
+        resDisplay.innerHTML = 'DAMAGE!!!!!';
+        animation();
         this.player.health = this.player.health - (attackDamEn - defDamP);
         console.log(this.player.health);
     }
@@ -252,11 +262,13 @@ Game.prototype.compareEnemyTurn = function(){
 
 ////////VICTORY
 
-Game.prototype.victory = function(){
+Game.prototype.victory = function () {
     if (this.player.health <= 0) {
         console.log("You lost!")
+        resDisplay.innerHTML = 'You lost!';
     } else if (this.enemy.health <= 0) {
-        console.log("Conglaturation. You're winner!")
+        console.log("Conglaturation. You're winner!");
+        resDisplay.innerHTML = "Conglaturation. You're winner!";
     }
 }
 
@@ -269,14 +281,26 @@ attackButton.addEventListener('click', () => {
     console.log(game.enemy.health);
     game.victory();
 
-    setTimeout(function() {
+    setTimeout(function () {
+        resDisplay.innerHTML = 'ENEMY TURN';
+    }, 2000);
+
+    setTimeout(function () {
+        setTimeout(function () { })
         game.compareEnemyTurn();
         console.log(game.player.health);
         game.victory();
         attackButton.disabled = false;
-      }, 5000);  
+    }, 4000);
+
+    setTimeout(function () {
+        resDisplay.innerHTML = 'YOUR TURN';
+    }, 7000);
 })
 
+/////////////  ANIMATION
 
-
+const animation = function () {
+    resDisplay.style.animation = 'rotate 3s';
+}
 
