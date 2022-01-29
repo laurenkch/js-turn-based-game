@@ -9,9 +9,11 @@ const attackButton = document.querySelector('.attackButton');
 const startButton = document.querySelector('.startButton');
 const playerDropdown = document.querySelector('.dropdown-toggle');
 const resDisplay = document.querySelector('.resDisplay');
+const resetButton = document.querySelector('.resetButton');
 
 startButton.style.visibility = "hidden";
 attackButton.style.visibility = "hidden";
+resetButton.style.visibility = "hidden";
 
 const enemies = ['AttEnemy', 'DefEnemy', 'MedEnemy'];
 let game = {};
@@ -133,6 +135,7 @@ function start() {
     game.chooseEnemy();
     game.confirmPlayer();
     attackButton.style.visibility = "unset";
+    resetButton.style.visibility = "unset";
 };
 
 
