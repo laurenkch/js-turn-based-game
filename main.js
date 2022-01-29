@@ -1,7 +1,7 @@
 //////////////////////////////////////////////////////////////////////////////// CONSTANTS
 
-const playerHealthBar = document.querySelector('.player-healthleft');
-const enemyHealthBar = document.querySelector('.enemy-healthleft');
+const playerHealthBar = document.querySelector('.player .healthleft');
+const enemyHealthBar = document.querySelector('.enemy .healthleft');
 const playerNameDisplay = document.querySelector('.player h2');
 const enemyNameDisplay = document.querySelector('.enemy h2')
 const playerButton = document.querySelectorAll('.dropdown-item');
@@ -29,13 +29,32 @@ class Character {
         this.defense = defense;
         this.attVar = attVar;
         this.defVar = defVar;
+        this.healBar = "";
+    }
+    get healthLeft() {
+        return `${this.health}%`;
+    }
 
+    updateHealth = function () {
+        if (this.health > 0) {
+            this.healthBar.style.width = this.healthLeft;
+        } else {
+            this.healthBar.style.width = `0%`;
+        }
+    }
+
+}
+
+class Player extends Character {
+    constructor(name, health, attack, defense, attVar, defVar, healthBar) {
+        super(name, health, attack, defense, attVar, defVar);
+        this.healthBar = document.querySelector('.player .healthleft');
     }
 }
 
-class MedPlayer extends Character {
-    constructor(name, health, attack, defense, attVar, defVar) {
-        super(name, health, attack, defense, attVar, defVar);
+class MedPlayer extends Player {
+    constructor(name, health, attack, defense, attVar, defVar, healthBar) {
+        super(name, health, attack, defense, attVar, defVar, healthBar);
         this.name = 'Monkey with a stick';
         this.health = 100;
         this.attack = 15;
@@ -45,9 +64,9 @@ class MedPlayer extends Character {
     }
 }
 
-class DefPlayer extends Character {
-    constructor(name, health, attack, defense, attVar, defVar) {
-        super(name, health, attack, defense, attVar, defVar);
+class DefPlayer extends Player {
+    constructor(name, health, attack, defense, attVar, defVar, healthBar) {
+        super(name, health, attack, defense, attVar, defVar, healthBar);
         this.name = 'Turtle';
         this.health = 100;
         this.attack = 12;
@@ -57,7 +76,7 @@ class DefPlayer extends Character {
     }
 }
 
-class AttPlayer extends Character {
+class AttPlayer extends Player {
     constructor(name, health, attack, defense, attVar, defVar) {
         super(name, health, attack, defense, attVar, defVar);
         this.name = 'Cougar';
@@ -69,9 +88,16 @@ class AttPlayer extends Character {
     }
 }
 
-class MedEnemy extends Character {
-    constructor(name, health, attack, defense, attVar, defVar) {
+class Enemy extends Character {
+    constructor(name, health, attack, defense, attVar, defVar, healthBar) {
         super(name, health, attack, defense, attVar, defVar);
+        this.healthBar = document.querySelector('.enemy .healthleft');
+    }
+}
+
+class MedEnemy extends Enemy {
+    constructor(name, health, attack, defense, attVar, defVar, healthBar) {
+        super(name, health, attack, defense, attVar, defVar, healthBar);
         this.name = 'Zookeeper Connor';
         this.health = 100;
         this.attack = 15;
@@ -81,7 +107,7 @@ class MedEnemy extends Character {
     }
 }
 
-class DefEnemy extends Character {
+class DefEnemy extends Enemy {
     constructor(name, health, attack, defense, attVar, defVar) {
         super(name, health, attack, defense, attVar, defVar);
         this.name = 'Zookeeper Shaun';
@@ -93,7 +119,7 @@ class DefEnemy extends Character {
     }
 }
 
-class AttEnemy extends Character {
+class AttEnemy extends Enemy {
     constructor(name, health, attack, defense, attVar, defVar) {
         super(name, health, attack, defense, attVar, defVar);
         this.name = 'Zookeeper Tommy';
@@ -142,9 +168,9 @@ function start() {
 /////////////////////////////////////////////////////////////////////////// CONFIRM PLAYER
 
 Game.prototype.confirmPlayer = function () {
-    if (character === 'AttPlayer') {
+    if (character === 'Cougar') {
         this.player = new AttPlayer;
-    } else if (character === 'DefPlayer') {
+    } else if (character === 'Turtle') {
         this.player = new DefPlayer;
     } else {
         this.player = new MedPlayer;
@@ -275,13 +301,16 @@ Game.prototype.victory = function () {
     }
 }
 
+
 //////////////////////////////////////////////////////////////////////////////// ATTACK BUTTON
 
 
 attackButton.addEventListener('click', () => {
     attackButton.disabled = true;
     game.comparePlayerTurn();
+
     console.log(game.enemy.health);
+    game.enemy.updateHealth();
     game.victory();
 
     setTimeout(function () {
@@ -291,6 +320,7 @@ attackButton.addEventListener('click', () => {
     setTimeout(function () {
         setTimeout(function () { })
         game.compareEnemyTurn();
+        game.player.updateHealth();
         console.log(game.player.health);
         game.victory();
         attackButton.disabled = false;
