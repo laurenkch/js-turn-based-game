@@ -153,7 +153,11 @@ startButton.addEventListener("click", function () {
     startButton.style.visibility = "hidden";
     playerDropdown.style.visibility = "hidden";
     resDisplay.innerHTML = 'FIGHT!!!!!';
-    animation();
+    rotate();
+    setTimeout(function(){
+        resDisplay.style.animation = 'none';
+    },3000)
+    
 });
 
 function start() {
@@ -222,7 +226,11 @@ Game.prototype.defDamage = function () {
     if (defResultEn >= 5) {
         console.log('BLOCKED!');
         resDisplay.innerHTML = 'BLOCKED!!!!!';
-        animation();
+        resDisplay.style.color = 'red';
+        colorChange();
+        setTimeout(function(){
+            resDisplay.style.animation = 'none';
+        },750)
         return this.enemy.defense + 100
     } else {
         return this.enemy.defense - (defResultEn);
@@ -237,7 +245,11 @@ Game.prototype.comparePlayerTurn = function () {
     if (attackDamP > defDamEn) {
         console.log('DAMAGE');
         resDisplay.innerHTML = 'DAMAGE!!!!!';
-        animation();
+        resDisplay.style.color = 'red';
+        colorChange();
+        setTimeout(function(){
+            resDisplay.style.animation = 'none';
+        },750)
         console.log(this.enemy.health)
         console.log(attackDamP - defDamEn)
         console.log(this.enemy.health - (attackDamP - defDamEn));
@@ -269,7 +281,11 @@ Game.prototype.defDamEnemy = function () {
     if (defResultP >= 5) {
         console.log('BLOCKED!')
         resDisplay.innerHTML = 'BLOCKED!!!!!';
-        animation();
+        resDisplay.style.color = 'red';
+        colorChange();
+        setTimeout(function(){
+            resDisplay.style.animation = 'none';
+        },750)
         return this.player.defense + 100;
     } else {
         return this.player.defense - (defResultP);
@@ -283,7 +299,11 @@ Game.prototype.compareEnemyTurn = function () {
     if (attackDamEn > defDamP) {
         console.log('DAMAGE');
         resDisplay.innerHTML = 'DAMAGE!!!!!';
-        animation();
+        resDisplay.style.color = 'red';
+        colorChange();
+        setTimeout(function(){
+            resDisplay.style.animation = 'none';
+        },750)
         this.player.health = this.player.health - (attackDamEn - defDamP);
         console.log(this.player.health);
     }
@@ -315,7 +335,8 @@ attackButton.addEventListener('click', () => {
 
     setTimeout(function () {
         resDisplay.innerHTML = 'ENEMY TURN';
-    }, 2000);
+        resDisplay.style.color = 'black';
+    }, 4000);
 
     setTimeout(function () {
         setTimeout(function () { })
@@ -323,17 +344,21 @@ attackButton.addEventListener('click', () => {
         game.player.updateHealth();
         console.log(game.player.health);
         game.victory();
-        attackButton.disabled = false;
-    }, 4000);
+    }, 5000);
 
     setTimeout(function () {
         resDisplay.innerHTML = 'YOUR TURN';
-    }, 7000);
+        resDisplay.style.color = 'black';
+        attackButton.disabled = false;
+    }, 9000);
 })
 
 /////////////  ANIMATION
 
-const animation = function () {
+const rotate = function () {
     resDisplay.style.animation = 'rotate 3s';
 }
 
+const colorChange = function (){
+    resDisplay.style.animation = "fade-in-and-out .75s"
+}
