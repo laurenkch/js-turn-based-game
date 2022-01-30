@@ -27,7 +27,6 @@ class Character {
         this.defense = defense;
         this.attVar = attVar;
         this.defVar = defVar;
-        this.healBar = "";
     }
     get healthLeft() {
         return `${this.health}%`;
@@ -36,6 +35,7 @@ class Character {
     updateHealth = function () {
         if (this.health > 0) {
             this.healthBar.style.width = this.healthLeft;
+            this.healthStats.textContent = `${this.health}/100`;
         } else {
             this.healthBar.style.width = `0%`;
         }
@@ -44,15 +44,16 @@ class Character {
 }
 
 class Player extends Character {
-    constructor(name, health, attack, defense, attVar, defVar, healthBar) {
+    constructor(name, health, attack, defense, attVar, defVar) {
         super(name, health, attack, defense, attVar, defVar);
         this.healthBar = document.querySelector('.player .healthleft');
+        this.healthStats = document.querySelector('.player p');
     }
 }
 
 class MedPlayer extends Player {
-    constructor(name, health, attack, defense, attVar, defVar, healthBar) {
-        super(name, health, attack, defense, attVar, defVar, healthBar);
+    constructor(name, health, attack, defense, attVar, defVar) {
+        super(name, health, attack, defense, attVar, defVar);
         this.name = 'Monkey with a stick';
         this.health = 100;
         this.attack = 15;
@@ -63,8 +64,8 @@ class MedPlayer extends Player {
 }
 
 class DefPlayer extends Player {
-    constructor(name, health, attack, defense, attVar, defVar, healthBar) {
-        super(name, health, attack, defense, attVar, defVar, healthBar);
+    constructor(name, health, attack, defense, attVar, defVar) {
+        super(name, health, attack, defense, attVar, defVar);
         this.name = 'Turtle';
         this.health = 100;
         this.attack = 12;
@@ -75,8 +76,8 @@ class DefPlayer extends Player {
 }
 
 class AttPlayer extends Player {
-    constructor(name, health, attack, defense, attVar, defVar) {
-        super(name, health, attack, defense, attVar, defVar);
+constructor(name, health, attack, defense, attVar, defVar) {
+    super(name, health, attack, defense, attVar, defVar);
         this.name = 'Cougar';
         this.health = 100;
         this.attack = 17;
@@ -87,15 +88,16 @@ class AttPlayer extends Player {
 }
 
 class Enemy extends Character {
-    constructor(name, health, attack, defense, attVar, defVar, healthBar) {
+    constructor(name, health, attack, defense, attVar, defVar) {
         super(name, health, attack, defense, attVar, defVar);
         this.healthBar = document.querySelector('.enemy .healthleft');
+        this.healthStats = document.querySelector('.enemy p');
     }
 }
 
 class MedEnemy extends Enemy {
-    constructor(name, health, attack, defense, attVar, defVar, healthBar) {
-        super(name, health, attack, defense, attVar, defVar, healthBar);
+    constructor(name, health, attack, defense, attVar, defVar) {
+        super(name, health, attack, defense, attVar, defVar);
         this.name = 'Zookeeper Connor';
         this.health = 100;
         this.attack = 15;
@@ -146,6 +148,7 @@ class Game {
             this.player = new MedPlayer;
         }
         playerNameDisplay.innerHTML = this.player.name;
+        this.player.healthStats.innerHTML = `100/100`
     }
 
     chooseEnemy() {
@@ -158,6 +161,7 @@ class Game {
             this.enemy = new MedEnemy;
         }
         enemyNameDisplay.innerHTML = this.enemy.name;
+        this.enemy.healthStats.innerHTML = `100/100`
     }
 
     attVarResult() {
@@ -192,6 +196,7 @@ class Game {
         let defDamEn = game.defDamage();
         if (attackDamP > defDamEn) {
             resDisplay.innerHTML = 'DAMAGE!!!!!';
+            resDisplay.innerHTML += `<br>-${attackDamP - defDamEn}`;
             resDisplay.style.color = 'red';
             colorChange();
             setTimeout(function(){
@@ -233,6 +238,7 @@ class Game {
         let defDamP = game.defDamEnemy();
         if (attackDamEn > defDamP) {
             resDisplay.innerHTML = 'DAMAGE!!!!!';
+            resDisplay.innerHTML += `<br>-${attackDamEn - defDamP}`;
             resDisplay.style.color = 'red';
             colorChange();
             setTimeout(function(){
@@ -329,6 +335,8 @@ function reset() {
     playerNameDisplay.innerHTML = "";
     document.querySelector('.player .healthleft').style.width = `100%`;
     document.querySelector('.enemy .healthleft').style.width = `100%`;
+    document.querySelector('.player p').innerHTML = "";
+    document.querySelector('.enemy p').innerHTML = "";
     resDisplay.innerHTML = "";
 }
 
