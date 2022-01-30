@@ -10,6 +10,7 @@ const resDisplay = document.querySelector('.resDisplay');
 const resetButton = document.querySelector('.resetButton');
 const playerImage = document.querySelector('.player .image img');
 const enemyImage = document.querySelector('.enemy .image img');
+const characters = ['Monkey with a stick', 'Cougar', 'Turtle'];
 
 
 startButton.style.visibility = "hidden";
@@ -265,6 +266,9 @@ class Game {
 
 playerButton.forEach(button => button.addEventListener('click', function (event) {
     character = event.target.value;
+    if (character === 'Random') {
+        character = characters[Math.floor(Math.random() * characters.length)];
+    };
     playerNameDisplay.innerHTML = character;
     startButton.style.visibility = 'unset';
     if (character === 'Cougar') {

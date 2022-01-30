@@ -1,0 +1,9 @@
+Animals:
+* Cougar - attack
+* Monkey with a stick - middle ground
+* Turtle - defense
+
+Zookeepers:
+* Tommy — attack
+* Connor — middle ground
+* Shawn — defense
