@@ -8,6 +8,9 @@ const startButton = document.querySelector('.startButton');
 const playerDropdown = document.querySelector('.dropdown-toggle');
 const resDisplay = document.querySelector('.resDisplay');
 const resetButton = document.querySelector('.resetButton');
+const playerImage = document.querySelector('.player .image img');
+const enemyImage = document.querySelector('.enemy .image img');
+
 
 startButton.style.visibility = "hidden";
 attackButton.style.visibility = "hidden";
@@ -16,6 +19,7 @@ resetButton.style.visibility = "hidden";
 const enemies = ['AttEnemy', 'DefEnemy', 'MedEnemy'];
 let game = {};
 let character = "";
+let isReset = false;
 //////////////////////////////////////////////////////////////////////////////// CLASSES
 
 
@@ -92,6 +96,7 @@ class Enemy extends Character {
         super(name, health, attack, defense, attVar, defVar);
         this.healthBar = document.querySelector('.enemy .healthleft');
         this.healthStats = document.querySelector('.enemy p');
+        this.image = "./images/zookeeper1.png"
     }
 }
 
@@ -161,7 +166,8 @@ class Game {
             this.enemy = new MedEnemy;
         }
         enemyNameDisplay.innerHTML = this.enemy.name;
-        this.enemy.healthStats.innerHTML = `100/100`
+        this.enemy.healthStats.innerHTML = `100/100`;
+        enemyImage.src = `${this.enemy.image}`;
     }
 
     attVarResult() {
@@ -252,7 +258,7 @@ class Game {
         if (this.player.health <= 0) {
             resDisplay.innerHTML = 'You lost!';
         } else if (this.enemy.health <= 0) {
-            resDisplay.innerHTML = "Conglaturation. You're winner!";
+            resDisplay.innerHTML = "Congratulations. You're winner!";
         }
     }
 }
@@ -261,6 +267,13 @@ playerButton.forEach(button => button.addEventListener('click', function (event)
     character = event.target.value;
     playerNameDisplay.innerHTML = character;
     startButton.style.visibility = 'unset';
+    if (character === 'Cougar') {
+        playerImage.src = './images/cougar.png';
+    } else if (character === 'Turtle') {
+        playerImage.src = './images/turtle.png';
+    } else {
+        playerImage.src = './images/monkey.png';
+    }
 }));
 
 //////////////////////////////////////////////////////////////////////////////// START BUTTON
@@ -278,6 +291,8 @@ startButton.addEventListener("click", function () {
 });
 
 function start() {
+    isReset = false;
+    attackButton.disabled = false;
     game = new Game();
     game.chooseEnemy();
     game.confirmPlayer();
@@ -296,21 +311,27 @@ attackButton.addEventListener('click', () => {
     game.victory();
 
     setTimeout(function () {
-        resDisplay.innerHTML = 'ENEMY TURN';
-        resDisplay.style.color = 'black';
+        if (isReset === false) {
+            resDisplay.innerHTML = 'ENEMY TURN';
+            resDisplay.style.color = 'black';
+        };
     }, 4000);
 
     setTimeout(function () {
-        setTimeout(function () { })
-        game.compareEnemyTurn();
-        game.player.updateHealth();
-        game.victory();
+        if (isReset === false) {
+            setTimeout(function () { })
+            game.compareEnemyTurn();
+            game.player.updateHealth();
+            game.victory();
+        };
     }, 5000);
 
     setTimeout(function () {
-        resDisplay.innerHTML = 'YOUR TURN';
-        resDisplay.style.color = 'black';
-        attackButton.disabled = false;
+        if (isReset === false) {
+            resDisplay.innerHTML = 'YOUR TURN';
+            resDisplay.style.color = 'black';
+            attackButton.disabled = false;
+        };
     }, 9000);
 })
 
@@ -329,15 +350,20 @@ function reset() {
     playerDropdown.style.visibility = "unset";
     attackButton.style.visibility = "hidden";
     resetButton.style.visibility = "hidden";
-    console.log('restart');
 
     enemyNameDisplay.innerHTML = "";
     playerNameDisplay.innerHTML = "";
+
     document.querySelector('.player .healthleft').style.width = `100%`;
     document.querySelector('.enemy .healthleft').style.width = `100%`;
+
     document.querySelector('.player p').innerHTML = "";
     document.querySelector('.enemy p').innerHTML = "";
+
+    playerImage.src = "";
+    enemyImage.src = "";
     resDisplay.innerHTML = "";
+    isReset = true;
 }
 
 resetButton.addEventListener('click', reset);
