@@ -1,7 +1,5 @@
 //////////////////////////////////////////////////////////////////////////////// CONSTANTS
 
-const playerHealthBar = document.querySelector('.player .healthleft');
-const enemyHealthBar = document.querySelector('.enemy .healthleft');
 const playerNameDisplay = document.querySelector('.player h2');
 const enemyNameDisplay = document.querySelector('.enemy h2')
 const playerButton = document.querySelectorAll('.dropdown-item');
@@ -319,3 +317,19 @@ const rotate = function () {
 const colorChange = function (){
     resDisplay.style.animation = "fade-in-and-out .75s"
 }
+///////////////////////////////////////////////////////////////////////////RESET 
+
+function reset() {
+    playerDropdown.style.visibility = "unset";
+    attackButton.style.visibility = "hidden";
+    resetButton.style.visibility = "hidden";
+    console.log('restart');
+
+    enemyNameDisplay.innerHTML = "";
+    playerNameDisplay.innerHTML = "";
+    document.querySelector('.player .healthleft').style.width = `100%`;
+    document.querySelector('.enemy .healthleft').style.width = `100%`;
+    resDisplay.innerHTML = "";
+}
+
+resetButton.addEventListener('click', reset);

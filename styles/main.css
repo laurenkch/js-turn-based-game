@@ -19,11 +19,17 @@ ul {
     list-style: none;
     padding-left: unset;
 }
-
-.btn-danger {
+.container {
+    width: 100vw;
+    height: 100vh;
+}
+.resetButton {
     position: absolute;
-    bottom: 10vh;
-    left: 47vw;
+    bottom: 0;
+    left: 50%;
+    width: 68px;
+    margin-left: -34px;
+    margin-bottom: 20px;
 }
 
 .player, .enemy {
