@@ -184,8 +184,6 @@ class Game {
         }
     }
 
-
-
     defVarResult() {
         return Math.floor((Math.random() * this.enemy.defVar) + 1);
     }
@@ -377,13 +375,13 @@ const rotate = function () {
 const colorChange = function () {
     resDisplay.style.animation = "fade-in-and-out .75s"
 }
+
 ///////////////////////////////////////////////////////////////////////////RESET 
 
 function reset() {
     playerDropdown.style.visibility = "unset";
     attackButton.style.visibility = "hidden";
     resetButton.style.visibility = "hidden";
-
     enemyNameDisplay.innerHTML = "";
     playerNameDisplay.innerHTML = "";
 
