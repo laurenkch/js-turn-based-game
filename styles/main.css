@@ -5,6 +5,7 @@
 html {
     box-sizing: border-box;
 }
+
 *,
 *:before,
 *:after {
@@ -48,7 +49,6 @@ ul {
 .results {
     height: 300px;
     border: solid 3px black;
-    /* background-color: rgb(54, 223, 54);   */
     background-image: linear-gradient(to bottom right, rgb(173, 236, 173),rgb(54, 223, 54), rgb(17, 66, 17));
 }
 

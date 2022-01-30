@@ -138,6 +138,119 @@ class Game {
         this.player = player;
         this.enemy = enemy;
     }
+
+    confirmPlayer() {
+        if (character === 'Cougar') {
+            this.player = new AttPlayer;
+        } else if (character === 'Turtle') {
+            this.player = new DefPlayer;
+        } else {
+            this.player = new MedPlayer;
+        }
+        playerNameDisplay.innerHTML = this.player.name;
+    }
+
+    chooseEnemy() {
+        let num = Math.floor(Math.random() * 3);
+        if (enemies[num] === 'AttEnemy') {
+            this.enemy = new AttEnemy;
+        } else if (enemies[num] === 'DefEnemy') {
+            this.enemy = new DefEnemy;
+        } else {
+            this.enemy = new MedEnemy;
+        }
+        enemyNameDisplay.innerHTML = this.enemy.name;
+    }
+
+    attVarResult() {
+        return Math.floor((Math.random() * this.player.attVar) + 1);
+    }
+    
+    defVarResult() {
+        return Math.floor((Math.random() * this.enemy.defVar) + 1);
+    }
+    
+    attDamage() {
+        return this.player.attack + game.attVarResult();
+    }
+    
+    defDamage() {
+        let defResultEn = game.defVarResult();
+        if (defResultEn >= 5) {
+            resDisplay.innerHTML = 'BLOCKED!!!!!';
+            resDisplay.style.color = 'red';
+            colorChange();
+            setTimeout(function(){
+                resDisplay.style.animation = 'none';
+            },750)
+            return this.enemy.defense + 100
+        } else {
+            return this.enemy.defense - (defResultEn);
+        }
+    }
+    
+    comparePlayerTurn() {
+        let attackDamP = game.attDamage();
+        let defDamEn = game.defDamage();
+        if (attackDamP > defDamEn) {
+            resDisplay.innerHTML = 'DAMAGE!!!!!';
+            resDisplay.style.color = 'red';
+            colorChange();
+            setTimeout(function(){
+                resDisplay.style.animation = 'none';
+            },750)
+            this.enemy.health = this.enemy.health - (attackDamP - defDamEn);
+        }
+    }
+
+    attVarResEnemy() {
+        return Math.floor((Math.random() * this.enemy.attVar) + 1);
+    }
+    
+    defVarResEnemy() {
+        return Math.floor((Math.random() * this.player.defVar) + 1);
+    }
+    
+    attDamEnemy() {
+        return this.enemy.attack + game.attVarResult();
+    }
+    
+    defDamEnemy() {
+        let defResultP = game.defVarResEnemy();
+        if (defResultP >= 5) {
+            resDisplay.innerHTML = 'BLOCKED!!!!!';
+            resDisplay.style.color = 'red';
+            colorChange();
+            setTimeout(function(){
+                resDisplay.style.animation = 'none';
+            },750)
+            return this.player.defense + 100;
+        } else {
+            return this.player.defense - (defResultP);
+        }
+    }
+    
+    compareEnemyTurn() {
+        let attackDamEn = game.attDamEnemy();
+        let defDamP = game.defDamEnemy();
+        if (attackDamEn > defDamP) {
+            resDisplay.innerHTML = 'DAMAGE!!!!!';
+            resDisplay.style.color = 'red';
+            colorChange();
+            setTimeout(function(){
+                resDisplay.style.animation = 'none';
+            },750)
+            this.player.health = this.player.health - (attackDamEn - defDamP);
+        }
+    }
+
+    victory() {
+        if (this.player.health <= 0) {
+            resDisplay.innerHTML = 'You lost!';
+        } else if (this.enemy.health <= 0) {
+            resDisplay.innerHTML = "Conglaturation. You're winner!";
+        }
+    }
 }
 
 playerButton.forEach(button => button.addEventListener('click', function (event) {
@@ -169,167 +282,12 @@ function start() {
 };
 
 
-/////////////////////////////////////////////////////////////////////////// CONFIRM PLAYER
-
-Game.prototype.confirmPlayer = function () {
-    if (character === 'Cougar') {
-        this.player = new AttPlayer;
-    } else if (character === 'Turtle') {
-        this.player = new DefPlayer;
-    } else {
-        this.player = new MedPlayer;
-    }
-    playerNameDisplay.innerHTML = this.player.name;
-    console.log(this.player);
-};
-
-
-/////////////////////////////////////////////////////////////////////////// PICK AN ENEMY
-
-Game.prototype.chooseEnemy = function () {
-    let num = Math.floor(Math.random() * 3);
-    console.log(enemies[num]);
-    if (enemies[num] === 'AttEnemy') {
-        this.enemy = new AttEnemy;
-    } else if (enemies[num] === 'DefEnemy') {
-        this.enemy = new DefEnemy;
-    } else {
-        this.enemy = new MedEnemy;
-    }
-    enemyNameDisplay.innerHTML = this.enemy.name;
-    console.log(this.enemy);
-}
-
-//////////////////////////////////////////////////////////////////////////////// COMPARE
-
-/////////PLAYER TURN
-
-Game.prototype.attVarResult = function () {
-    // console.log(Math.floor((Math.random() * this.player.attVar) + 1));
-    return Math.floor((Math.random() * this.player.attVar) + 1);
-}
-
-Game.prototype.defVarResult = function () {
-    // console.log(Math.floor(Math.random * this.enemy.defVar) + 1);
-    return Math.floor((Math.random() * this.enemy.defVar) + 1);
-}
-
-Game.prototype.attDamage = function () {
-    // game.attVarResult();
-    // console.log(this.player.attack + game.attVarResult());
-    return this.player.attack + game.attVarResult();
-}
-
-Game.prototype.defDamage = function () {
-    let defResultEn = game.defVarResult();
-    console.log(defResultEn);
-    if (defResultEn >= 5) {
-        console.log('BLOCKED!');
-        resDisplay.innerHTML = 'BLOCKED!!!!!';
-        resDisplay.style.color = 'red';
-        colorChange();
-        setTimeout(function(){
-            resDisplay.style.animation = 'none';
-        },750)
-        return this.enemy.defense + 100
-    } else {
-        return this.enemy.defense - (defResultEn);
-    }
-}
-
-Game.prototype.comparePlayerTurn = function () {
-    let attackDamP = game.attDamage();
-    console.log(attackDamP);
-    let defDamEn = game.defDamage();
-    console.log(defDamEn);
-    if (attackDamP > defDamEn) {
-        console.log('DAMAGE');
-        resDisplay.innerHTML = 'DAMAGE!!!!!';
-        resDisplay.style.color = 'red';
-        colorChange();
-        setTimeout(function(){
-            resDisplay.style.animation = 'none';
-        },750)
-        console.log(this.enemy.health)
-        console.log(attackDamP - defDamEn)
-        console.log(this.enemy.health - (attackDamP - defDamEn));
-        this.enemy.health = this.enemy.health - (attackDamP - defDamEn);
-        console.log(this.enemy.health);
-    }
-}
-
-/////////ENEMY TURN
-
-Game.prototype.attVarResEnemy = function () {
-    // console.log(Math.floor((Math.random() * this.enemy.attVar) + 1));
-    return Math.floor((Math.random() * this.enemy.attVar) + 1);
-}
-
-Game.prototype.defVarResEnemy = function () {
-    // console.log(Math.floor((Math.random * this.player.defVar) + 1));
-    return Math.floor((Math.random() * this.player.defVar) + 1);
-}
-
-Game.prototype.attDamEnemy = function () {
-    // console.log(this.enemy.attack + game.attVarResult());
-    return this.enemy.attack + game.attVarResult();
-}
-
-Game.prototype.defDamEnemy = function () {
-    let defResultP = game.defVarResEnemy();
-    // console.log(defResultP);
-    if (defResultP >= 5) {
-        console.log('BLOCKED!')
-        resDisplay.innerHTML = 'BLOCKED!!!!!';
-        resDisplay.style.color = 'red';
-        colorChange();
-        setTimeout(function(){
-            resDisplay.style.animation = 'none';
-        },750)
-        return this.player.defense + 100;
-    } else {
-        return this.player.defense - (defResultP);
-    }
-}
-
-Game.prototype.compareEnemyTurn = function () {
-    let attackDamEn = game.attDamEnemy();
-    // console.log(attackDamEn);
-    let defDamP = game.defDamEnemy();
-    if (attackDamEn > defDamP) {
-        console.log('DAMAGE');
-        resDisplay.innerHTML = 'DAMAGE!!!!!';
-        resDisplay.style.color = 'red';
-        colorChange();
-        setTimeout(function(){
-            resDisplay.style.animation = 'none';
-        },750)
-        this.player.health = this.player.health - (attackDamEn - defDamP);
-        console.log(this.player.health);
-    }
-}
-
-////////VICTORY
-
-Game.prototype.victory = function () {
-    if (this.player.health <= 0) {
-        console.log("You lost!")
-        resDisplay.innerHTML = 'You lost!';
-    } else if (this.enemy.health <= 0) {
-        console.log("Conglaturation. You're winner!");
-        resDisplay.innerHTML = "Conglaturation. You're winner!";
-    }
-}
-
-
 //////////////////////////////////////////////////////////////////////////////// ATTACK BUTTON
 
 
 attackButton.addEventListener('click', () => {
     attackButton.disabled = true;
     game.comparePlayerTurn();
-
-    console.log(game.enemy.health);
     game.enemy.updateHealth();
     game.victory();
 
@@ -342,7 +300,6 @@ attackButton.addEventListener('click', () => {
         setTimeout(function () { })
         game.compareEnemyTurn();
         game.player.updateHealth();
-        console.log(game.player.health);
         game.victory();
     }, 5000);
 
