@@ -194,7 +194,7 @@ class Game {
 
     attVarResult() {
         playerCount += 1;
-        if (enemyCount === 6){
+        if (enemyCount === 6) {
             enemyCount = Math.floor((Math.random() * 3) + 1);
         } else if (playerCount === 5) {
             return Math.floor((Math.random() * (this.player.attVar + 5)) + 1);
@@ -235,13 +235,13 @@ class Game {
             if (playerCount === 5) {
                 resDisplay.innerHTML = 'SPECIAL ATTACK!!!!!';
                 let damage = new Sound(`./sounds/sword-hit-7160.mp3`)
-            damage.play()
+                damage.play()
             } else {
                 resDisplay.innerHTML = 'DAMAGE!!!!!';
                 let damage = new Sound(`./sounds/sword-hit-7160.mp3`)
-            damage.play()
+                damage.play()
             }
-           
+
             resDisplay.innerHTML += `<br>-${attackDamP - defDamEn}`;
             resDisplay.style.color = 'red';
             colorChange();
@@ -254,7 +254,7 @@ class Game {
 
     attVarResEnemy() {
         enemyCount += 1;
-        if (enemyCount === 6){
+        if (enemyCount === 6) {
             enemyCount = Math.floor((Math.random() * 3) + 1);
         } else if (enemyCount === 5) {
             return Math.floor((Math.random() * (this.enemy.attVar + 5)) + 1);
@@ -295,11 +295,11 @@ class Game {
             if (enemyCount === 5) {
                 resDisplay.innerHTML = 'SPECIAL ATTACK!!!!!';
                 let damage = new Sound(`./sounds/sword-hit-7160.mp3`)
-            damage.play()
+                damage.play()
             } else {
                 resDisplay.innerHTML = 'DAMAGE!!!!!';
                 let damage = new Sound(`./sounds/sword-hit-7160.mp3`)
-            damage.play();
+                damage.play();
             }
 
             resDisplay.innerHTML += `<br>-${attackDamEn - defDamP}`;
@@ -346,6 +346,8 @@ startButton.addEventListener("click", function () {
     startButton.style.visibility = "hidden";
     playerDropdown.style.visibility = "hidden";
     resDisplay.innerHTML = 'FIGHT!!!!!';
+    let fight = new Sound(`./sounds/lion-roar-6011.mp3`)
+    fight.play()
     rotate();
     setTimeout(function () {
         resDisplay.style.animation = 'none';
