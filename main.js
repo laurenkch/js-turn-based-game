@@ -265,7 +265,6 @@ class Game {
         let attackDamEn = game.attDamEnemy();
         let defDamP = game.defDamEnemy();
         if (attackDamEn > defDamP) {
-            console.log(enemyCount);
             if (enemyCount === 5) {
                 resDisplay.innerHTML = 'SPECIAL ATTACK!!!!!';
             } else {
