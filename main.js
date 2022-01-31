@@ -383,8 +383,6 @@ attackButton.addEventListener('click', () => {
     setTimeout(function () {
         if (isReset === false) {
             setTimeout(function () { })
-            let zookeeperSwing = new Sound(`./sounds/394441__inspectorj__bamboo-swing-a6.wav`);
-            zookeeperSwing.play();
             game.compareEnemyTurn();
             game.player.updateHealth();
             game.victory();
