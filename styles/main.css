@@ -166,3 +166,8 @@ h1 {
     background-color: var(--darkgreen) !important;
     border: var(--darkgreen) !important;
 }
+
+.storyText {
+    position: absolute;
+    top: 0px;
+}
