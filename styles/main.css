@@ -9,6 +9,13 @@ html {
 body{
     background-color: rgb(80, 185, 218);
 }
+
+footer{
+    background-color: black;
+    color: white;
+    text-align: center;
+}
+
 *,
 *:before,
 *:after {
