@@ -23,6 +23,25 @@ let character = "";
 let isReset = false;
 let playerCount = 0;
 let enemyCount = 0
+
+///////////////////////////////////////////////////////////// SOUND CONSTRUCTOR
+
+function Sound(src) {
+    this.sound = document.createElement("audio");
+    this.sound.src = src;
+    this.sound.setAttribute("preload", "auto");
+    this.sound.setAttribute("controls", "none");
+    this.sound.style.display = "none";
+    document.body.appendChild(this.sound);
+    this.play = function () {
+        this.sound.play();
+    }
+    this.stop = function () {
+        this.sound.pause();
+    }
+}
+
+
 //////////////////////////////////////////////////////////////////////////////// CLASSES
 
 
@@ -283,9 +302,11 @@ class Game {
 
     victory() {
         if (this.player.health <= 0) {
-            resDisplay.innerHTML = 'You lost!';
+            resDisplay.innerHTML = 'You lost! The zookeeper places you back in your cage.';
+            let loseSound = new Sound(`./sounds/270329__littlerobotsoundfactory__jingle - lose - 00.wav`)
+            loseSound.play();
         } else if (this.enemy.health <= 0) {
-            resDisplay.innerHTML = "Congratulations. You're winner!";
+            resDisplay.innerHTML = "Congratulations. You escaped the zoo";
         }
     }
 }
@@ -350,7 +371,10 @@ attackButton.addEventListener('click', () => {
     setTimeout(function () {
         if (isReset === false) {
             setTimeout(function () { })
+            let zookeeperSwing = new Sound(`./sounds/394441__inspectorj__bamboo-swing-a6.wav`);
+            zookeeperSwing.play();
             game.compareEnemyTurn();
+            loseSound.play();
             game.player.updateHealth();
             game.victory();
         };
@@ -397,3 +421,6 @@ function reset() {
 }
 
 resetButton.addEventListener('click', reset);
+
+
+
