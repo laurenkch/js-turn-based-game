@@ -8,14 +8,20 @@ const startButton = document.querySelector('.startButton');
 const playerDropdown = document.querySelector('.dropdown-toggle');
 const resDisplay = document.querySelector('.resDisplay');
 const resetButton = document.querySelector('.resetButton');
+const storyButton = document.querySelector('.storyButton'); 
 const playerImage = document.querySelector('.player .image img');
 const enemyImage = document.querySelector('.enemy .image img');
 const characters = ['Monkey with a stick', 'Cougar', 'Turtle'];
+const backButton = document.querySelector('.backButton');
+const storyText = document.querySelector('.storyText');
+const container = document.querySelector('.container');
+
 
 
 startButton.style.visibility = "hidden";
 attackButton.style.visibility = "hidden";
 resetButton.style.visibility = "hidden";
+storyText.style.visibility = "hidden";
 
 const enemies = ['AttEnemy', 'DefEnemy', 'MedEnemy'];
 let game = {};
@@ -350,6 +356,7 @@ playerButton.forEach(button => button.addEventListener('click', function (event)
 startButton.addEventListener("click", function () {
     start();
     startButton.style.visibility = "hidden";
+    storyButton.style.visibility = "hidden";
     playerDropdown.style.visibility = "hidden";
     resDisplay.innerHTML = 'FIGHT!!!!!';
     let fight = new Sound(`./sounds/lion-roar-6011.mp3`)
@@ -440,7 +447,28 @@ function reset() {
     isReset = true;
 }
 
+// function storyMode() {
+    
+
+// }
+
+storyButton.addEventListener("click", function() {
+    container.style.visibility = "hidden";
+    storyText.style.visibility = "visible";
+    // backButton.style.visibility = "visible";
+    console.log(backButton)
+} );
+
+backButton.addEventListener("click", function () {
+    // console.log("It was clicked")
+    container.style.visibility = "visible";
+    storyText.style.visibility = "hidden";
+    // body.innerHTML = bodyOriginalHTML;
+    // backButton.style.visibility = "hidden";
+});
+
 resetButton.addEventListener('click', reset);
 
 
 
+// storyMode()
