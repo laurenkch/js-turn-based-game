@@ -86,7 +86,7 @@ h1 {
 
 .results {
     height: 300px;
-    border: solid 3px black;
+    border: 1px dashed darkgray;
     background-image: linear-gradient(to bottom right, rgb(173, 236, 173),rgb(54, 223, 54), rgb(17, 66, 17));
 }
 
