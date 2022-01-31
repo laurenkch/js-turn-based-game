@@ -21,6 +21,7 @@ const enemies = ['AttEnemy', 'DefEnemy', 'MedEnemy'];
 let game = {};
 let character = "";
 let isReset = false;
+let gameOver = false;
 let playerCount = 0;
 let enemyCount = 0
 
@@ -64,6 +65,7 @@ class Character {
             this.healthStats.textContent = `${this.health}/100`;
         } else {
             this.healthBar.style.width = `0%`;
+            this.healthStats.textContent = `0/100`;
         }
     }
 
@@ -217,7 +219,7 @@ class Game {
             resDisplay.innerHTML = 'BLOCKED!!!!!';
             let blocked = new Sound(`./sounds/shield-guard-6963.mp3`)
             blocked.play()
-            resDisplay.style.color = 'red';
+            resDisplay.style.color = 'var(--red)';
             colorChange();
             setTimeout(function () {
                 resDisplay.style.animation = 'none';
@@ -243,7 +245,7 @@ class Game {
             }
 
             resDisplay.innerHTML += `<br>-${attackDamP - defDamEn}`;
-            resDisplay.style.color = 'red';
+            resDisplay.style.color = 'var(--red)';
             colorChange();
             setTimeout(function () {
                 resDisplay.style.animation = 'none';
@@ -277,7 +279,7 @@ class Game {
             resDisplay.innerHTML = 'BLOCKED!!!!!';
             let blocked = new Sound(`./sounds/shield-guard-6963.mp3`)
             blocked.play()
-            resDisplay.style.color = 'red';
+            resDisplay.style.color = 'var(--red)';
             colorChange();
             setTimeout(function () {
                 resDisplay.style.animation = 'none';
@@ -303,7 +305,7 @@ class Game {
             }
 
             resDisplay.innerHTML += `<br>-${attackDamEn - defDamP}`;
-            resDisplay.style.color = 'red';
+            resDisplay.style.color = 'var(--red)';
             colorChange();
             setTimeout(function () {
                 resDisplay.style.animation = 'none';
@@ -314,11 +316,15 @@ class Game {
 
     victory() {
         if (this.player.health <= 0) {
-            resDisplay.innerHTML = 'You lost! The zookeeper places you back in your cage.';
-            let loseSound = new Sound(`./sounds/270329__littlerobotsoundfactory__jingle - lose - 00.wav`)
+            resDisplay.innerHTML = 'You lost! Back to your cage.';
+            let loseSound = new Sound(`./sounds/270329__littlerobotsoundfactory__jingle-lose-00.wav`)
             loseSound.play();
+            gameOver = true;
         } else if (this.enemy.health <= 0) {
-            resDisplay.innerHTML = "Congratulations. You escaped the zoo";
+            resDisplay.innerHTML = "Congratulations! You escaped the zoo.";
+            let winSound = new Sound(`./sounds/607407__colorscrimsontears__fanfare-3-rpg.wav`)
+            winSound.play();
+            gameOver = true;
         }
     }
 }
@@ -356,6 +362,7 @@ startButton.addEventListener("click", function () {
 });
 
 function start() {
+    gameOver = false;
     isReset = false;
     attackButton.disabled = false;
     game = new Game();
@@ -376,14 +383,16 @@ attackButton.addEventListener('click', () => {
     game.victory();
 
     setTimeout(function () {
-        if (isReset === false) {
+        if (isReset === false && gameOver === false) {
             resDisplay.innerHTML = 'ENEMY TURN';
             resDisplay.style.color = 'black';
         };
     }, 4000);
 
     setTimeout(function () {
-        if (isReset === false) {
+        if (isReset === false && gameOver === false) {
+            let swing = new Sound(`./sounds/394441__inspectorj__bamboo-swing-a6.wav`)
+            swing.play();
             setTimeout(function () { })
             game.compareEnemyTurn();
             game.player.updateHealth();
@@ -392,7 +401,7 @@ attackButton.addEventListener('click', () => {
     }, 5000);
 
     setTimeout(function () {
-        if (isReset === false) {
+        if (isReset === false && gameOver === false) {
             resDisplay.innerHTML = 'YOUR TURN';
             resDisplay.style.color = 'black';
             attackButton.disabled = false;
