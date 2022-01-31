@@ -432,6 +432,7 @@ function reset() {
     playerDropdown.style.visibility = "unset";
     attackButton.style.visibility = "hidden";
     resetButton.style.visibility = "hidden";
+    storyButton.style.visibility = "visible";
     enemyNameDisplay.innerHTML = "";
     playerNameDisplay.innerHTML = "";
 
