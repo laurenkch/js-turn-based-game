@@ -21,6 +21,8 @@ const enemies = ['AttEnemy', 'DefEnemy', 'MedEnemy'];
 let game = {};
 let character = "";
 let isReset = false;
+let playerCount = 0;
+let enemyCount = 0
 //////////////////////////////////////////////////////////////////////////////// CLASSES
 
 
@@ -81,8 +83,8 @@ class DefPlayer extends Player {
 }
 
 class AttPlayer extends Player {
-constructor(name, health, attack, defense, attVar, defVar) {
-    super(name, health, attack, defense, attVar, defVar);
+    constructor(name, health, attack, defense, attVar, defVar) {
+        super(name, health, attack, defense, attVar, defVar);
         this.name = 'Cougar';
         this.health = 100;
         this.attack = 17;
@@ -172,85 +174,112 @@ class Game {
     }
 
     attVarResult() {
-        return Math.floor((Math.random() * this.player.attVar) + 1);
+        playerCount += 1;
+        if (enemyCount === 6){
+            enemyCount = Math.floor((Math.random() * 3) + 1);
+        } else if (playerCount === 5) {
+            return Math.floor((Math.random() * (this.player.attVar + 5)) + 1);
+        } else {
+            return Math.floor((Math.random() * this.player.attVar) + 1);
+        }
     }
-    
+
+
+
     defVarResult() {
         return Math.floor((Math.random() * this.enemy.defVar) + 1);
     }
-    
+
     attDamage() {
         return this.player.attack + game.attVarResult();
     }
-    
+
     defDamage() {
         let defResultEn = game.defVarResult();
         if (defResultEn >= 5) {
             resDisplay.innerHTML = 'BLOCKED!!!!!';
             resDisplay.style.color = 'red';
             colorChange();
-            setTimeout(function(){
+            setTimeout(function () {
                 resDisplay.style.animation = 'none';
-            },750)
+            }, 750)
             return this.enemy.defense + 100
         } else {
             return this.enemy.defense - (defResultEn);
         }
     }
-    
+
     comparePlayerTurn() {
         let attackDamP = game.attDamage();
         let defDamEn = game.defDamage();
         if (attackDamP > defDamEn) {
-            resDisplay.innerHTML = 'DAMAGE!!!!!';
+            if (playerCount === 5) {
+                resDisplay.innerHTML = 'SPECIAL ATTACK!!!!!';
+            } else {
+                resDisplay.innerHTML = 'DAMAGE!!!!!';
+            }
+            // resDisplay.innerHTML = 'DAMAGE!!!!!';
             resDisplay.innerHTML += `<br>-${attackDamP - defDamEn}`;
             resDisplay.style.color = 'red';
             colorChange();
-            setTimeout(function(){
+            setTimeout(function () {
                 resDisplay.style.animation = 'none';
-            },750)
+            }, 750)
             this.enemy.health = this.enemy.health - (attackDamP - defDamEn);
         }
     }
 
     attVarResEnemy() {
-        return Math.floor((Math.random() * this.enemy.attVar) + 1);
+        enemyCount += 1;
+        if (enemyCount === 6){
+            enemyCount = Math.floor((Math.random() * 3) + 1);
+        } else if (enemyCount === 5) {
+            return Math.floor((Math.random() * (this.enemy.attVar + 5)) + 1);
+        } else {
+            return Math.floor((Math.random() * this.enemy.attVar) + 1);
+        }
     }
-    
+
     defVarResEnemy() {
         return Math.floor((Math.random() * this.player.defVar) + 1);
     }
-    
+
     attDamEnemy() {
-        return this.enemy.attack + game.attVarResult();
+        return this.enemy.attack + game.attVarResEnemy();
     }
-    
+
     defDamEnemy() {
         let defResultP = game.defVarResEnemy();
         if (defResultP >= 5) {
             resDisplay.innerHTML = 'BLOCKED!!!!!';
             resDisplay.style.color = 'red';
             colorChange();
-            setTimeout(function(){
+            setTimeout(function () {
                 resDisplay.style.animation = 'none';
-            },750)
+            }, 750)
             return this.player.defense + 100;
         } else {
             return this.player.defense - (defResultP);
         }
     }
-    
+
     compareEnemyTurn() {
         let attackDamEn = game.attDamEnemy();
         let defDamP = game.defDamEnemy();
         if (attackDamEn > defDamP) {
-            resDisplay.innerHTML = 'DAMAGE!!!!!';
+            console.log(enemyCount);
+            if (enemyCount === 5) {
+                resDisplay.innerHTML = 'SPECIAL ATTACK!!!!!';
+            } else {
+                resDisplay.innerHTML = 'DAMAGE!!!!!';
+            }
+            // resDisplay.innerHTML = 'DAMAGE!!!!!';
             resDisplay.innerHTML += `<br>-${attackDamEn - defDamP}`;
             resDisplay.style.color = 'red';
             colorChange();
-            setTimeout(function(){
+            setTimeout(function () {
                 resDisplay.style.animation = 'none';
-            },750)
+            }, 750)
             this.player.health = this.player.health - (attackDamEn - defDamP);
         }
     }
@@ -288,10 +317,10 @@ startButton.addEventListener("click", function () {
     playerDropdown.style.visibility = "hidden";
     resDisplay.innerHTML = 'FIGHT!!!!!';
     rotate();
-    setTimeout(function(){
+    setTimeout(function () {
         resDisplay.style.animation = 'none';
-    },3000)
-    
+    }, 3000)
+
 });
 
 function start() {
@@ -345,7 +374,7 @@ const rotate = function () {
     resDisplay.style.animation = 'rotate 3s';
 }
 
-const colorChange = function (){
+const colorChange = function () {
     resDisplay.style.animation = "fade-in-and-out .75s"
 }
 ///////////////////////////////////////////////////////////////////////////RESET 
