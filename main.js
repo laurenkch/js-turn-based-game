@@ -215,6 +215,8 @@ class Game {
         let defResultEn = game.defVarResult();
         if (defResultEn >= 5) {
             resDisplay.innerHTML = 'BLOCKED!!!!!';
+            let blocked = new Sound(`./sounds/shield-guard-6963.mp3`)
+            blocked.play()
             resDisplay.style.color = 'red';
             colorChange();
             setTimeout(function () {
@@ -232,8 +234,12 @@ class Game {
         if (attackDamP > defDamEn) {
             if (playerCount === 5) {
                 resDisplay.innerHTML = 'SPECIAL ATTACK!!!!!';
+                let damage = new Sound(`./sounds/sword-hit-7160.mp3`)
+            damage.play()
             } else {
                 resDisplay.innerHTML = 'DAMAGE!!!!!';
+                let damage = new Sound(`./sounds/sword-hit-7160.mp3`)
+            damage.play()
             }
            
             resDisplay.innerHTML += `<br>-${attackDamP - defDamEn}`;
@@ -269,6 +275,8 @@ class Game {
         let defResultP = game.defVarResEnemy();
         if (defResultP >= 5) {
             resDisplay.innerHTML = 'BLOCKED!!!!!';
+            let blocked = new Sound(`./sounds/shield-guard-6963.mp3`)
+            blocked.play()
             resDisplay.style.color = 'red';
             colorChange();
             setTimeout(function () {
@@ -286,8 +294,12 @@ class Game {
         if (attackDamEn > defDamP) {
             if (enemyCount === 5) {
                 resDisplay.innerHTML = 'SPECIAL ATTACK!!!!!';
+                let damage = new Sound(`./sounds/sword-hit-7160.mp3`)
+            damage.play()
             } else {
                 resDisplay.innerHTML = 'DAMAGE!!!!!';
+                let damage = new Sound(`./sounds/sword-hit-7160.mp3`)
+            damage.play();
             }
 
             resDisplay.innerHTML += `<br>-${attackDamEn - defDamP}`;
