@@ -386,7 +386,6 @@ attackButton.addEventListener('click', () => {
             let zookeeperSwing = new Sound(`./sounds/394441__inspectorj__bamboo-swing-a6.wav`);
             zookeeperSwing.play();
             game.compareEnemyTurn();
-            loseSound.play();
             game.player.updateHealth();
             game.victory();
         };
