@@ -235,7 +235,7 @@ class Game {
             } else {
                 resDisplay.innerHTML = 'DAMAGE!!!!!';
             }
-            // resDisplay.innerHTML = 'DAMAGE!!!!!';
+           
             resDisplay.innerHTML += `<br>-${attackDamP - defDamEn}`;
             resDisplay.style.color = 'red';
             colorChange();
@@ -289,7 +289,7 @@ class Game {
             } else {
                 resDisplay.innerHTML = 'DAMAGE!!!!!';
             }
-            // resDisplay.innerHTML = 'DAMAGE!!!!!';
+
             resDisplay.innerHTML += `<br>-${attackDamEn - defDamP}`;
             resDisplay.style.color = 'red';
             colorChange();
